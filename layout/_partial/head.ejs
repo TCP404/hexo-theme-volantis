@@ -1,4 +1,4 @@
-<head hexo-theme='https://volantis.js.org/#<%- theme.info.version %>'>
+<head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/<%- theme.info.version %>'>
   <meta charset="utf-8">
   <!-- SEO相关 -->
   <% if (page.robots) { %>
@@ -28,7 +28,7 @@
 
   <!-- 页面元数据 -->
   <%
-    var title = page.seotitle || page.title;
+    var title = page.seo_title || page.title;
     var keywords = page.keywords || '';
     var description = page.description || '';
     if (is_archive()) {
@@ -62,10 +62,11 @@
       }
     }
   %>
-    <title><% if (title) { %><%= title %> - <% } %><%= config.title %></title>
+  <title><% if (title) { %><%= title %> - <% } %><%= config.title %></title>
   <% if (keywords){ %>
     <meta name="keywords" content="<%- keywords %>">
   <% } %>
+
   <% if (description){ %>
     <meta name="description" content="<%- description %>">
   <% } %>
@@ -83,20 +84,30 @@
   <% } %>
 
   <!-- link -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13/css/all.min.css">
-  <% if (theme.plugins.fancybox && theme.plugins.fancybox.css) { %>
-    <%- css(theme.plugins.fancybox.css) %>
+  <% if (theme.plugins.fontawesome) { %>
+    <%- css(theme.plugins.fontawesome) %>
   <% } %>
+  <% if (theme.plugins.fontawesome_animation) { %>
+    <%- css(theme.plugins.fontawesome_animation) %>
+  <% } %>
+  <% if (theme.plugins.fancybox) { %>
+    <%- css(theme.plugins.fancybox) %>
+  <% } %>
+
   <% if (theme.plugins.nodewaves && theme.plugins.nodewaves.css) { %>
     <%- css(theme.plugins.nodewaves.css) %>
   <% } %>
 
   <% if (config.favicon) { %>
-  <link rel="shortcut icon" type='image/x-icon' href="<%- url_for(config.favicon) %>">
+    <link rel="shortcut icon" type='image/x-icon' href="<%- url_for(config.favicon) %>">
   <% } %>
 
   <% if (theme.plugins.aplayer.enable) { %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+  <% } %>
+
+  <% if (theme.comments.service == 'vssue') { %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/meteorlxy/vssue@1.4.4/packages/vssue/dist/vssue.min.css">
   <% } %>
 
   <!-- import link -->
@@ -110,26 +121,23 @@
       <%- css(theme.plugins.highlightjs.css) %>
     <% } %>
   <% } %>
-  <% if (config.use_cdn && theme.info && theme.info.cdn && theme.info.cdn.css) { %>
+  <% if (config.use_cdn && theme.info.cdn && theme.info.cdn.css) { %>
     <%- css(theme.info.cdn.css) %>
   <% } else { %>
     <%- css('css/style.css') %>
   <% } %>
-
-  <script>
-    function setLoadingBarProgress(num) {
-      document.getElementById('loading-bar').style.width=num+"%";
-    }
-  </script>
-
   <% if (config.google_analytics_key) { %>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<%- config.google_analytics_key %>"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '<%- config.google_analytics_key %>');
+	setTimeout(function() {
+  	  window.ga_tid = '<%- config.google_analytics_key %>';
+ 	   (function() {
+ 	     var dga = document.createElement("script");
+ 	     dga.src = "https://rmt.dogedoge.com/fetch/public/ga.js";
+	      var s = document.getElementsByTagName("script")[0];
+	      s.parentNode.insertBefore(dga, s);
+	  })();
+	}, 5000);
     </script>
   <% } %>
   <% if (config.baidu_analytics_key) { %>
@@ -137,10 +145,13 @@
     <script>
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?<%= config.baidu_analytics_key %>";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+	  setTimeout(function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?<%= config.baidu_analytics_key %>";
+		hm.defer=true;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+	  }, 5000);
     })();
     </script>
   <% } %>

@@ -2,19 +2,16 @@ footer
   position: relative
   padding: 40px 10px 120px 10px
   width: 100%
-  color: alpha($color-site-inner, .5)
+  color: alpha($color-site-footer, .5)
   margin: 0px auto
   &,p
     font-size: $fontsize-code
   overflow: hidden
   text-align: center
-
+  a:hover
+    text-decoration: underline
   .licenses
     color: fade(@color_text_main, 50%)
-    text-decoration: underline
-
-  .codename
-    text-decoration: underline
 
   .social-wrapper
     display: flex
@@ -24,11 +21,11 @@ footer
     font-size: $fontsize
 
   a
-    color: alpha($color-site-inner, .75)
+    color: alpha($color-site-footer, .75)
     padding: 0
     trans()
     &:hover
-      color: $color-site-inner
+      color: var(--color-site-footer)
     &.social
       position: relative
       display: inline-block
@@ -40,10 +37,10 @@ footer
       height: 36px
       margin: 4px
       border-radius: 100px
-      color: alpha($color-site-inner, .75)
+      color: alpha($color-site-footer, .75)
       &:hover
-        background: alpha($color-site-inner, .1)
-        color: $color-site-inner
+        background: alpha($color-site-footer, .1)
+        color: var(--color-site-footer)
 
 
 
